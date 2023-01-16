@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="aad9fcf1-b000-41ea-936f-dff1f9892f93" name="Changes" comment="Create Django Project">
+      <change beforePath="$PROJECT_DIR$/about_me.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/add_two_numbers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap4/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap4/css/bootstrap.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/b.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/cute.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/d.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/e.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/nyam.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/practice.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/what_time_is_it.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2KKEgLVaBA8diuLscpUte1SHAh9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/django_doit/project",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aad9fcf1-b000-41ea-936f-dff1f9892f93" name="Changes" comment="" />
+      <created>1673714983818</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673714983818</updated>
+      <workItem from="1673714985574" duration="1199000" />
+      <workItem from="1673716248382" duration="694000" />
+      <workItem from="1673841237068" duration="853000" />
+    </task>
+    <task id="LOCAL-00001" summary="Create Django Project">
+      <created>1673841918294</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1673841918294</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Create Django Project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create Django Project" />
+  </component>
+</project>
