@@ -1,10 +1,12 @@
-from django.shortcuts import render
 from .models import Post
-from django.views.generic import ListView
+from django.views.generic import ListView, DeleteView
 
 class PostList(ListView):
     model = Post
     ordering = '-pk'
+
+class PostDetail(DeleteView):
+    model = Post
 
 # def index(request):
 #     posts = Post.objects.all().order_by('-pk') #모든 Post 레코드 가져오기 / pk를 역순으로 정렬 (최신순)
@@ -22,7 +24,7 @@ class PostList(ListView):
 #
 #     return render(
 #         request,
-#         'blog/single_post_page.html',
+#         'blog/post_detail.html',
 #         {
 #             'post': post,
 #         }
