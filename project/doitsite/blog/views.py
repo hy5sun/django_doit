@@ -11,3 +11,14 @@ def index(request):
             'posts': posts,
         }
     )
+
+def single_post_page(request, pk):
+    post = Post.objects.get(pk=pk) #single_post_page() 함수의 매개변수로 받은 pk와 Post 모델의 pk 필드 값이 같은 레코드 가져오기
+
+    return render(
+        request,
+        'blog/single_post_page.html',
+        {
+            'post': post,
+        }
+    )
