@@ -79,23 +79,37 @@
                 <div class="col-md-8 col-lg-9">
                     <h1>블로그</h1>
 
-                    {% for p in post_list %}
                     <!-- Blog post-->
+                    {% for p in post_list %}
                     <div class="card mb-4">
-                    {% if p.head_image %} <!--head_image가 있으면 화면에 띄우기-->
-                        <img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p }} head image" /> <!--lt는 이미지가 없는 경우 텍스트로 대체하는 것-->
-                        {% else %} <!-- head_image가 없으면 임의의 이미지 띄우기-->
+
+                    <!-- Image -->
+                    {% if p.head_image %}
+                        <img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p }} head image" />
+                        {% else %}
                             <img class="card-img-top" src="https://picsum.photos/seed/{{ p.id }}/800/200" alt="random_image">
                         {% endif %}
+
+                        <!-- Title -->
                         <div class="card-body">
                             <h2 class="card-title h4">{{ p.title }}</h2>
-                            <p class="card-text">{{ p.content }}</p>
+
+                            <!-- Hook Text -->
+                            {% if p.hook_text %}
+                                <h5 class="text-muted">{{ p.hook_text }}</h5>
+                            {% endif %}
+
+                            <!-- Content -->
+                            <p class="card-text">{{ p.content | truncatewords:45 }}</p>
+
+                            <!-- Read More -->
                             <a href="{{ p.get_absolute_url }}" class="btn btn-primary">Read more &rarr;</a>
                         </div>
-                    <div class="card-footer text-muted">
-                        Posted on {{ p.created_at }} by
-                        <a href="#">작성자명 쓸 위치</a>
-                    </div>
+                        <!-- Author -->
+                        <div class="card-footer text-muted">
+                            Posted on {{ p.created_at }} by
+                            <a href="#">작성자명 쓸 위치</a>
+                        </div>
                     </div>
                     {% endfor %}
 
