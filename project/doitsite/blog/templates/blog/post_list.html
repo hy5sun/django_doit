@@ -82,7 +82,11 @@
                     {% for p in post_list %}
                     <!-- Blog post-->
                     <div class="card mb-4">
-                        <img class="card-img-top" src="{{ p.head_image.url }}" alt="Card image cap" />
+                    {% if p.head_image %} <!--head_image가 있으면 화면에 띄우기-->
+                        <img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p }} head image" /> <!--lt는 이미지가 없는 경우 텍스트로 대체하는 것-->
+                        {% else %} <!-- head_image가 없으면 임의의 이미지 띄우기-->
+                            <img class="card-img-top" src="https://picsum.photos/seed/{{ p.id }}/800/200" alt="random_image">
+                        {% endif %}
                         <div class="card-body">
                             <h2 class="card-title h4">{{ p.title }}</h2>
                             <p class="card-text">{{ p.content }}</p>
