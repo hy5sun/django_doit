@@ -7,3 +7,6 @@
 /dataSources/
 /dataSources.local.xml
 db.sqlite3
+.idea/
+migrations/
+_media/
