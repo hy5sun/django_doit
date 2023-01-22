@@ -13,7 +13,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) #작성일
     updated_at = models.DateTimeField(auto_now=True)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE) #포스트의 작성자가 데베에서 삭제되면 이 포스트도 같이 삭제
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL) #포스트의 작성자가 데베에서 삭제되면 작성자명을 빈칸으로 둔다
 
     def __str__(self):
         return f'[{self.pk}] {self.title} :: {self.author}'
