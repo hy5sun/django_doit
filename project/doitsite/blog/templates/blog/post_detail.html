@@ -6,7 +6,7 @@
 
 {% block main_area %}
     <div id="post-area">
-    {% if Post.category %}
+    {% if post.category %}
         <span class="badge badge-secondary float-right">{{ post.category }}</span>
     {% else %}
         <span class="badge badge-secondary float-right">미분류</span>
