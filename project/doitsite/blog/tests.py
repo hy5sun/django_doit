@@ -102,26 +102,27 @@ class TestView(TestCase):
         )
 
         # 1.2 그 포스트의 url은 '/blog/1/'이다.
-        self.assertEqual(post_001.get_absolute_url(), '/blog/1/')
+        self.assertEqual(self.post_001.get_absolute_url(), '/blog/1/')
 
         # 2. 첫 번째 포스트의 상세 페이지 테스트
         # 2.1 첫 번째 post url로 접근하면 정상적으로 작동한다. (status code: 200)
-        response = self.client.get(post_001.get_absolute_url())
+        response = self.client.get(self.post_001.get_absolute_url())
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        self.navbar_test(soup)
+        self.category_card_test(soup)
 
         # 2.3 첫 번째 포스트의 제목(title)이 웹 브라우저 탭 타이틀에 들어 있다.
-        self.assertIn(post_001.title, soup.title.text)
+        self.assertIn(self.post_001.title, soup.title.text)
 
         # 2.4 첫 번째 포스트이 제목이 포스트 영역(post_area)에 있다.
         main_area = soup.find('div', id='main-area')
         post_area = main_area.find('div', id='post-area')
-        self.assertIn(post_001.title, post_area.text)
+        self.assertIn(self.post_001.title, post_area.text)
+        self.assertIn(self.category_exo.name, post_area.text)
 
         # 2.5 첫 번째 포스트의 작성자(author)가 포스트 영역에 있다.
         self.assertIn(self.user_baekhyun.username.upper(), post_area.text)
 
         # 2.6 첫 번째 포스트이 내용(content)이 포스트 영역에 있다.
-        self.assertIn(post_001.content, post_area.text)
+        self.assertIn(self.post_001.content, post_area.text)
