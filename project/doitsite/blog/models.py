@@ -10,6 +10,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return f'/blog/category/{self.slug}/'
     
     class Meta: #복수형 직접 입력
         verbose_name_plural = 'Categories'
