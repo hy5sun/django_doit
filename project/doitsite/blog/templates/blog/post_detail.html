@@ -6,11 +6,11 @@
 
 {% block main_area %}
     <div id="post-area">
-    {% if post.category %}
-        <span class="badge badge-secondary float-right">{{ post.category }}</span>
-    {% else %}
-        <span class="badge badge-secondary float-right">미분류</span>
-    {% endif %}
+        {% if post.category %}
+            <span class="badge badge-secondary float-right">{{ post.category }}</span>
+        {% else %}
+            <span class="badge badge-secondary float-right">미분류</span>
+        {% endif %}
 
         <!-- Post title-->
         <h1 class="mt-4">{{ post.title }}</h1>
@@ -43,6 +43,15 @@
 
         <!-- Post Content -->
         <p>{{ post.content }}</p>
+
+        {% if p.tags.exists %}
+            <i class="fas fa-tags"></i>
+            {% for tag in p.tags.iterator %}
+                <a href="{{ tag.get_absolute_url }}"><span class="badge badge-pill badge-light">{{ tag }}</span></a>
+            {% endfor %}
+            <br/>
+            <br/>
+        {% endif %}
 
         {% if post.file_upload %} <!--첨부한 파일이 있다면 파일 다운로드 버튼 띄우기-->
             <a href="{{ post.file_upload.url }}" class="btn btn-outline-info" role="button" download>다운로드:

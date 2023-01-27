@@ -2,6 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 import os
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return f'/blog/tag/{self.slug}/'
+
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True) # 카테고리 이름 / unique=True: 동일한 name을 갖는 카테고리를 만들 수 없다.
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True) # slugField : 사람이 읽을 수 있는 텍스트. 고유 URL을 만들고 싶을 때 주로 사용.
@@ -31,6 +41,8 @@ class Post(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL) #포스트의 작성자가 데베에서 삭제되면 작성자명을 빈칸으로 둔다
 
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
+
+    tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
         return f'[{self.pk}] {self.title} :: {self.author}'
