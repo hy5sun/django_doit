@@ -173,14 +173,14 @@ class TestView(TestCase):
         main_area = soup.find('div', id='main-area')
         self.assertIn(self.tag_hello.name, main_area.text)
 
-        #self.assertIn(self.post_001.title, main_area.text)
+        self.assertIn(self.post_001.title, main_area.text)
         self.assertNotIn(self.post_002.title, main_area.text)
         self.assertNotIn(self.post_003.title, main_area.text)
 
     def test_create_post(self):
         # 로그인을 하지 않으면 status code가 200이 되면 안 된다.
         response = self.client.get('/blog/create_post/')
-        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(response.status_code, 200)
 
         # 로그인을 한다.
         self.client.login(username='baekhyun', password='exo0506')
