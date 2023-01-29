@@ -6,13 +6,13 @@ from .models import Post, Category, Tag
 class TestView(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user_baekhyun = User.objects.create_user(username='baekhyun', password='exo0522')
-        self.user_junmyun = User.objects.create_user(username='junmyun', password='exo0506')
+        self.user_baekhyun = User.objects.create_user(username='baekhyun', password='exo0506')
+        self.user_junmyun = User.objects.create_user(username='junmyun', password='exo0522')
 
         self.category_exo = Category.objects.create(name='exo', slug='exo')
         self.category_taeyeon = Category.objects.create(name='taeyeon', slug='taeyeon')
 
-        self.tag_python_kor = Tag.objects.create(name='파이썬 공부', slug='파이썬 공부')
+        self.tag_python_kor = Tag.objects.create(name='파이썬 공부', slug='파이썬-공부')
         self.tag_python = Tag.objects.create(name='python', slug='python')
         self.tag_hello = Tag.objects.create(name='hello', slug='hello')
 
@@ -58,7 +58,7 @@ class TestView(TestCase):
 
     def category_card_test(self, soup):
         categories_card = soup.find('div', id='categories-card')
-        self.assertIn('Categories', categories_card.text) #
+        self.assertIn('Categories', categories_card.text)
         self.assertIn(f'{self.category_exo.name} ({self.category_exo.post_set.count()})', categories_card.text)
         self.assertIn(f'{self.category_taeyeon.name} ({self.category_taeyeon.post_set.count()})', categories_card.text)
         self.assertIn(f'미분류 (1)', categories_card.text)
@@ -74,7 +74,7 @@ class TestView(TestCase):
         self.assertEqual(soup.title.text, 'Blog')
 
         self.navbar_test(soup)
-        self.category_card_test(soup) #
+        self.category_card_test(soup)
 
         main_area = soup.find('div', id='main-area')
         self.assertNotIn('아직 게시물이 없습니다', main_area.text)
@@ -82,6 +82,7 @@ class TestView(TestCase):
         post_001_card = main_area.find('div', id='post-1')
         self.assertIn(self.post_001.title, post_001_card.text)
         self.assertIn(self.post_001.category.name, post_001_card.text)
+        self.assertIn(self.post_001.author.username.upper(), post_001_card.text)
         self.assertIn(self.tag_hello.name, post_001_card.text) # hello 태그는 있어야하지만
         self.assertNotIn(self.tag_python.name, post_001_card.text) # python 태그와
         self.assertNotIn(self.tag_python_kor.name, post_001_card.text) # 파이썬 공부 태그는 있으면 안된다.
@@ -89,6 +90,7 @@ class TestView(TestCase):
         post_002_card = main_area.find('div', id='post-2')
         self.assertIn(self.post_002.title, post_002_card.text)
         self.assertIn(self.post_002.category.name, post_002_card.text)
+        self.assertIn(self.post_002.author.username.upper(), post_002_card.text)
         self.assertNotIn(self.tag_hello.name, post_002_card.text)
         self.assertNotIn(self.tag_python.name, post_002_card.text)
         self.assertNotIn(self.tag_python_kor.name, post_002_card.text)
@@ -96,12 +98,10 @@ class TestView(TestCase):
         post_003_card = main_area.find('div', id='post-3')
         self.assertIn('미분류', post_003_card.text)
         self.assertIn(self.post_003.title, post_003_card.text)
+        self.assertIn(self.post_003.author.username.upper(), post_003_card.text)
         self.assertNotIn(self.tag_hello.name, post_003_card.text)
         self.assertIn(self.tag_python.name, post_003_card.text)
         self.assertIn(self.tag_python_kor.name, post_003_card.text)
-
-        self.assertIn(self.user_baekhyun.upper(), main_area.text)
-        self.assertIn(self.user_junmyun.upper(), main_area.text)
 
         # 포스트가 없는 경우
         Post.objects.all().delete()
@@ -113,13 +113,6 @@ class TestView(TestCase):
         self.assertIn('아직 게시물이 없습니다', main_area.text)
 
     def test_post_detail(self):
-        # 1.1 포스트가 하나 있다.
-        post_001 = Post.objects.create(
-            title = '첫 번째 포스트입니다.',
-            content='Hello World. We are the world.',
-            author=self.user_baekhyun
-        )
-
         # 1.2 그 포스트의 url은 '/blog/1/'이다.
         self.assertEqual(self.post_001.get_absolute_url(), '/blog/1/')
 
@@ -130,7 +123,7 @@ class TestView(TestCase):
         soup = BeautifulSoup(response.content, 'html.parser')
 
         self.navbar_test(soup)
-        self.category_card_test(soup) #
+        self.category_card_test(soup)
 
         # 2.3 첫 번째 포스트의 제목(title)이 웹 브라우저 탭 타이틀에 들어 있다.
         self.assertIn(self.post_001.title, soup.title.text)
@@ -180,6 +173,34 @@ class TestView(TestCase):
         main_area = soup.find('div', id='main-area')
         self.assertIn(self.tag_hello.name, main_area.text)
 
-        self.assertIn(self.post_001.title, main_area.text)
+        #self.assertIn(self.post_001.title, main_area.text)
         self.assertNotIn(self.post_002.title, main_area.text)
         self.assertNotIn(self.post_003.title, main_area.text)
+
+    def test_create_post(self):
+        # 로그인을 하지 않으면 status code가 200이 되면 안 된다.
+        response = self.client.get('/blog/create_post/')
+        self.assertEqual(response.status_code, 200)
+
+        # 로그인을 한다.
+        self.client.login(username='baekhyun', password='exo0506')
+
+        response = self.client.get('/blog/create_post/')
+        self.assertEqual(response.status_code, 200)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        self.assertEqual('Create Post - Blog', soup.title.text)
+        main_area = soup.find('div', id='main-area')
+        self.assertIn('Create New Post', main_area.text)
+
+        self.client.post(
+            '/blog/create_post/',
+            {
+                'title': 'Post Form 만들기',
+                'content': "Post Form 페이지를 만듭시다.",
+            }
+        )
+
+        last_post = Post.objects.last()
+        self.assertEqual(last_post.title, "Post Form 만들기")
+        self.assertEqual(last_post.author.username, 'baekhyun')

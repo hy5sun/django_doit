@@ -44,9 +44,9 @@
         <!-- Post Content -->
         <p>{{ post.content }}</p>
 
-        {% if p.tags.exists %}
+        {% if post.tags.exists %}
             <i class="fas fa-tags"></i>
-            {% for tag in p.tags.iterator %}
+            {% for tag in post.tags.iterator %}
                 <a href="{{ tag.get_absolute_url }}"><span class="badge badge-pill badge-light">{{ tag }}</span></a>
             {% endfor %}
             <br/>
