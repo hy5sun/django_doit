@@ -37,7 +37,7 @@ class PostCreate(LoginRequiredMixin, CreateView):
 
 def category_page(request, slug):
     if slug == 'no_category':
-        category = '미분류',
+        category = '미분류'
         post_list = Post.objects.filter(category=None)
     else:
         category = Category.objects.get(slug=slug)
