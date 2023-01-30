@@ -3,6 +3,7 @@ from .models import Post, Category, Tag
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.utils.text import slugify
 
 class PostList(ListView):
     model = Post
@@ -27,11 +28,31 @@ class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
 
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user.is_staff
+
     def form_valid(self, form):
         current_user = self.request.user # 방문자
         if current_user.is_authenticated: # 방문자 로그인 상태라면
             form.instance.author = current_user # author 필드에 방문자 저장
-            return super(PostCreate, self).form_valid(form)
+            response = super(PostCreate, self).form_valid(form) #form_valid() 함수의 결과값 저장
+
+            tags_str = self.request.POST.get('tags_str') # POST 방식으로 전달된 정보 중 name이 tags_str인 input을 가져옴
+            if tags_str: # 태그를 입력했다면
+                tags_str = tags_str.strip()
+
+                tags_str = tags_str.replace(',', ';')
+                tags_list = tags_str.split(';')
+
+                for t in tags_list:
+                    t = t.strip()
+                    tag, is_tag_created = Tag.objects.get_or_create(name=t)
+                    if is_tag_created:
+                        tag.slug = slugify(t, allow_unicode=True)
+                        tag.save()
+                    self.object.tags.add(tag)
+
+                return response
         else: # 로그인 상태가 아니면
             return redirect('/blog/') # /blog/ 경로로 돌려보냄
 
