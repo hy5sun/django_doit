@@ -9,3 +9,6 @@
 .idea/
 migrations/
 _media/
+
+db.sqlite3
+/dataSources.xml
