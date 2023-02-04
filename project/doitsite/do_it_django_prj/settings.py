@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'markdownx',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google', # 구글 로그인 사용
 ]
 
 MIDDLEWARE = [
@@ -131,3 +135,17 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = (
+
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+)
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True # 회원가입 할 때 이메일은 반드시 받기
+ACCOUNT_EMAIL_VERIFICATION = 'none' # 이메일 검증 X
+LOGIN_REDIRECT_URL = '/blog/'
