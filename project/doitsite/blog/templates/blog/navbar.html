@@ -21,19 +21,27 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ user.username}}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
-                    </div>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {% if user.socialaacount_set.all.0.get_avatar_url %}
+                                <img class="rounded-circle" width="25px"
+                                     src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="">
+                            {% else %}
+                                <img class="rounded-circle" width="30px"
+                                     src="https://doitdjango.com/avatar/id/1447/5b269ebf572b5c5e/svg/{{ user.email }}">
+                            {% endif %}
+                            &nbsp;
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
+                        </div>
+                    </li>
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
@@ -46,7 +54,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel"> <i class="fas fa-sign-in-alt"></i>&nbsp Log In</h5>
+                <h5 class="modal-title" id="loginModalLabel"><i class="fas fa-sign-in-alt"></i>&nbsp Log In</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -54,11 +62,15 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>&nbsp&nbsp Log in with Google</a>
-                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/login"><i class="far fa-envelope"></i>&nbsp&nbsp Log in with Username</a>
+                        <a role="button" class="btn btn-outline-dark btn-block btn-sm"
+                           href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>&nbsp&nbsp Log in with
+                            Google</a>
+                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/login"><i
+                                class="far fa-envelope"></i>&nbsp&nbsp Log in with Username</a>
                     </div>
                     <div class="col-md-6">
-                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/signup/"><i class="far fa-envelope"></i>&nbsp&nbsp Sign Up with E-mail</a>
+                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/signup/"><i
+                                class="far fa-envelope"></i>&nbsp&nbsp Sign Up with E-mail</a>
                     </div>
                 </div>
             </div>
