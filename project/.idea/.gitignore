@@ -12,3 +12,5 @@ _media/
 
 db.sqlite3
 /dataSources.xml
+.env.prod
+.env.prod.db
